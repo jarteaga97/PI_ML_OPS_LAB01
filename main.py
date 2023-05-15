@@ -91,6 +91,31 @@ def franquicia(franquicia: str):
 
     return {'franquicia': franquicia, 'cantidad': cantidad, 'ganancia_total': ganancia_total, 'ganancia_promedio': ganancia_promedio}
 
+# CONSULTA 4
+@app.get('/peliculas_pais/{pais}')
+def peliculas_pais(pais: str):
+    '''Ingresas el país, retornando la cantidad de películas producidas en el mismo'''
+    df_movies_trans['production_countries']=df_movies_trans['production_countries'].fillna('')
+    cantidad = 0
+    
+    for countries in df_movies_trans['production_countries']:      
+        if pais in countries:
+                cantidad += 1
+    return {'pais':pais, 'cantidad':cantidad}
+
+# CONSULTA 5
+@app.get('/productoras/{productora}')
+def productoras(productora: str):
+    '''Ingresa la productora y retorna la ganancia total y la cantidad de películas que produjeron'''
+
+    df_movies_trans['production_companies'] = df_movies_trans['production_companies'].fillna('')
+    productora_df = df_movies_trans[df_movies_trans['production_companies'].apply(lambda x: productora in x)]
+
+    ganancia_total = productora_df['revenue'].sum()
+    cantidad = productora_df['revenue'].count()
+
+    return {'productora': productora, 'ganancia_total': ganancia_total, 'cantidad': cantidad}
+
 # CONSULTA 6
 @app.get('/retorno/{pelicula}')
 def retorno(pelicula:str):
