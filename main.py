@@ -13,7 +13,7 @@ async def index ():
     return output
 
 #Carga de base de datos con las transoformaciones ya realizadas (Ver archivo ETL.ipynb)
-df_movies_trans = pd.read_csv('C:/2lap 2023/BOOTCAMP HENRY/LAB01_10/datasets/movies_transform.csv')
+df_movies_trans = pd.read_csv('datasets/movies_transform.csv')
 
 df_movies_trans['release_date'] = pd.to_datetime(df_movies_trans['release_date'])
 
